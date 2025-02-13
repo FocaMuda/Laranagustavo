@@ -1,16 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will You Be My Valentine?</title>
+
+    <!-- Fuente Dancing Script de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+
     <style>
-        /* Estilos para el fondo rosa */
+        /* Estilos generales */
         body {
-            background-color: #faddeb; /* Color rosa */
-            font-family: Arial, sans-serif;
+            background-color: #faddeb;
+            font-family: 'Dancing Script', cursive;
             color: white;
             text-align: center;
+            margin: 0;
+            overflow: hidden;
+            /* Evita barras de desplazamiento */
+
         }
 
         .container {
@@ -20,31 +31,55 @@
         }
 
         h1 {
-            font-size: 2.5em;
+            font-size: 3em;
+            font-weight: 700;
+            /* Negrita */
         }
 
         .buttons {
             margin-top: 20px;
         }
 
-        .yes-button, .no-button {
-            padding: 15px 30px;  /* Aumentar el tamaño del padding para hacerlo más grande */
+        .yes-button,
+        .no-button {
+            padding: 15px 30px;
             margin: 10px;
-            font-size: 1.5em;     /* Aumentar un poco el tamaño de la fuente */
+            font-size: 1.5em;
             cursor: pointer;
             border: none;
-            border-radius: 5px;
+            border-radius: 30px;
+            /* Bordes más redondeados */
             transition: all 0.3s ease;
+            font-family: 'Dancing Script', cursive;
         }
 
+        /* Botón "Yes" */
         .yes-button {
-            background-color: #28a745; /* Verde */
+            background-color: #e91e63;
+            /* Rosa intenso */
             color: white;
+            box-shadow: 0 4px 8px rgba(233, 30, 99, 0.3);
         }
 
+        .yes-button:hover {
+            background-color: #f06292;
+            /* Rosa más claro */
+            box-shadow: 0 6px 12px rgba(233, 30, 99, 0.5);
+        }
+
+        /* Botón "No" */
         .no-button {
-            background-color: #dc3545; /* Rojo */
+            position: absolute;
+            background-color: #880e4f;
+            /* Rosa oscuro */
             color: white;
+            box-shadow: 0 4px 8px rgba(136, 14, 79, 0.3);
+        }
+
+        .no-button:hover {
+            background-color: #c2185b;
+            /* Rosa más claro */
+            box-shadow: 0 6px 12px rgba(136, 14, 79, 0.5);
         }
 
         .gif_container {
@@ -57,6 +92,12 @@
             border-radius: 10px;
         }
 
+        .teleport-counter {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: black;
+        }
+
         /* Estilos para la página de respuesta afirmativa */
         .yes-page {
             display: none;
@@ -65,60 +106,68 @@
             text-align: center;
         }
 
+        .tonto-counter {
+            font-size: 1.8em;
+            color: rgb(63, 7, 51);
+            margin-top: 20px;
+        }
     </style>
 </head>
+
 <body>
-    <!-- Página inicial -->
     <div class="container" id="initialPage">
         <h1>Will you be my Valentine?</h1>
         <div class="buttons">
             <button class="yes-button" id="yesButton" onclick="handleYesClick()">Yes</button>
-            <button class="no-button" onclick="handleNoClick()">No</button>
+            <button class="no-button" id="noButton" onmouseover="teleportButton()">No</button>
         </div>
+
         <div class="gif_container">
-            <img src="https://pa1.aminoapps.com/6514/3e405f83f2e879697810b0f05ffd227028d60acb_hq.gif" alt="Gustavo la Rana">
+            <img src="https://pa1.aminoapps.com/6514/3e405f83f2e879697810b0f05ffd227028d60acb_hq.gif"
+                alt="Gustavo la Rana">
         </div>
     </div>
 
-    <!-- Página de respuesta afirmativa -->
     <div class="yes-page" id="yesPage">
-        <h1>ole ole los caracoles</h1>
+        <h1>¡Ole ole los caracoles!</h1>
         <div class="gif_container">
-            <!-- Cambié la URL de la imagen aquí -->
             <img src="https://media1.tenor.com/m/0xoedFwflPAAAAAd/kermit-the-frog-robin.gif">
         </div>
+        <p class="tonto-counter" id="tontoCounter"></p>
     </div>
 
     <script>
-        // Función para manejar el clic en el botón "Yes"
+        let teleportCount = 0; // Contador de teletransportaciones
+
         function handleYesClick() {
-            // Oculta la página inicial
             document.getElementById('initialPage').style.display = 'none';
-            // Muestra la página de respuesta afirmativa
             document.getElementById('yesPage').style.display = 'block';
+
+            // Mostrar el número de veces que fue "tonto"
+            document.getElementById('tontoCounter').textContent = `Has sido gay ${teleportCount} veces 😡`;
         }
 
-        // Función para manejar el clic en el botón "No"
-        let clickCount = 0; // Contador para el número de clics
-        function handleNoClick() {
-            clickCount++;
-            const yesButton = document.getElementById('yesButton');
+        function teleportButton() {
+            const noButton = document.getElementById('noButton');
+            const counterText = document.getElementById('teleportCounter');
+            const bodyWidth = document.body.clientWidth;
+            const bodyHeight = document.body.clientHeight;
 
-            // Agranda el botón "Yes" gradualmente en función del número de clics
-            let newWidth = 120 + (clickCount * 200); // Aumenta 60% en cada clic
-            let newHeight = 60 + (clickCount * 100); // Aumenta la altura también
-            yesButton.style.width = newWidth + 'px';
-            yesButton.style.height = newHeight + 'px';
+            // Calcular una posición aleatoria dentro de la pantalla
+            const randomX = Math.random() * (bodyWidth - noButton.offsetWidth);
+            const randomY = Math.random() * (bodyHeight - noButton.offsetHeight);
 
-            // // Si el botón "Yes" alcanza el tamaño de toda la pantalla, muestra la siguiente página
-            // if (newWidth >= 500) { // Puedes ajustar este valor a lo que consideres adecuado
-            //     setTimeout(function() {
-            //         // Cambiar a la página de respuesta afirmativa
-            //         document.getElementById('initialPage').style.display = 'none';
-            //         document.getElementById('yesPage').style.display = 'block';
-            //     }, 500); // Esperar 0.5 segundos después de que el botón se haya agrandado lo suficiente
-            // }
+            // Mover el botón "No" a la nueva posición
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+
+            // Incrementar el contador y actualizar el texto
+            teleportCount++;
+            counterText.textContent = `El botón "No" ha cambiado de posición ${teleportCount} veces.`;
+
+            console.log(`El botón "No" ha cambiado de posición ${teleportCount} veces.`);
         }
     </script>
 </body>
+
 </html>
