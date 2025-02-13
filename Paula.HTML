@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Will You Be My Valentine?</title>
+
+    <!-- Fuente Dancing Script de Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Estilos generales */
+        body {
+            background-color: #faddeb;
+            font-family: 'Dancing Script', cursive;
+            color: white;
+            text-align: center;
+            margin: 0;
+            overflow: hidden;
+            /* Evita barras de desplazamiento */
+
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 3em;
+            font-weight: 700;
+            /* Negrita */
+        }
+
+        .buttons {
+            margin-top: 20px;
+        }
+
+        .yes-button,
+        .no-button {
+            padding: 15px 30px;
+            margin: 10px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border: none;
+            border-radius: 30px;
+            /* Bordes más redondeados */
+            transition: all 0.3s ease;
+            font-family: 'Dancing Script', cursive;
+        }
+
+        /* Botón "Yes" */
+        .yes-button {
+            background-color: #e91e63;
+            /* Rosa intenso */
+            color: white;
+            box-shadow: 0 4px 8px rgba(233, 30, 99, 0.3);
+        }
+
+        .yes-button:hover {
+            background-color: #f06292;
+            /* Rosa más claro */
+            box-shadow: 0 6px 12px rgba(233, 30, 99, 0.5);
+        }
+
+        /* Botón "No" */
+        .no-button {
+            position: absolute;
+            background-color: #880e4f;
+            /* Rosa oscuro */
+            color: white;
+            box-shadow: 0 4px 8px rgba(136, 14, 79, 0.3);
+        }
+
+        .no-button:hover {
+            background-color: #c2185b;
+            /* Rosa más claro */
+            box-shadow: 0 6px 12px rgba(136, 14, 79, 0.5);
+        }
+
+        .gif_container {
+            margin-top: 30px;
+        }
+
+        img {
+            width: 100%;
+            max-width: 500px;
+            border-radius: 10px;
+        }
+
+        .teleport-counter {
+            font-size: 1.5em;
+            margin-top: 20px;
+            color: black;
+        }
+
+        /* Estilos para la página de respuesta afirmativa */
+        .yes-page {
+            display: none;
+            background-color: #faddeb;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .tonto-counter {
+            font-size: 1.8em;
+            color: rgb(63, 7, 51);
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container" id="initialPage">
+        <h1>Will you be my Valentine?</h1>
+        <div class="buttons">
+            <button class="yes-button" id="yesButton" onclick="handleYesClick()">Yes</button>
+            <button class="no-button" id="noButton" onmouseover="teleportButton()">No</button>
+        </div>
+
+        <div class="gif_container">
+            <img src="https://pa1.aminoapps.com/6514/3e405f83f2e879697810b0f05ffd227028d60acb_hq.gif"
+                alt="Gustavo la Rana">
+        </div>
+    </div>
+
+    <div class="yes-page" id="yesPage">
+        <h1>¡Ole ole los caracoles!</h1>
+        <div class="gif_container">
+            <img src="https://media1.tenor.com/m/0xoedFwflPAAAAAd/kermit-the-frog-robin.gif">
+        </div>
+        <p class="tonto-counter" id="tontoCounter"></p>
+    </div>
+
+    <script>
+        let teleportCount = 0; // Contador de teletransportaciones
+
+        function handleYesClick() {
+            document.getElementById('initialPage').style.display = 'none';
+            document.getElementById('yesPage').style.display = 'block';
+
+            // Mostrar el número de veces que fue "tonto"
+            document.getElementById('tontoCounter').textContent = `Has sido gay ${teleportCount} veces `;
+        }
+
+        function teleportButton() {
+            const noButton = document.getElementById('noButton');
+            const counterText = document.getElementById('teleportCounter');
+            const bodyWidth = document.body.clientWidth;
+            const bodyHeight = document.body.clientHeight;
+
+            // Calcular una posición aleatoria dentro de la pantalla
+            const randomX = Math.random() * (bodyWidth - noButton.offsetWidth);
+            const randomY = Math.random() * (bodyHeight - noButton.offsetHeight);
+
+            // Mover el botón "No" a la nueva posición
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+
+            // Incrementar el contador y actualizar el texto
+            teleportCount++;
+            counterText.textContent = `El botón "No" ha cambiado de posición ${teleportCount} veces.`;
+
+            console.log(`El botón "No" ha cambiado de posición ${teleportCount} veces.`);
+        }
+    </script>
+</body>
+
+</html>
